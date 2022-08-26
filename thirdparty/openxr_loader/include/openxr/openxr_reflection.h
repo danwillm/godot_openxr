@@ -350,6 +350,9 @@ XR_ENUM_STR(XrResult);
     _(XR_TYPE_VULKAN_SWAPCHAIN_CREATE_INFO_META, 1000227000) \
     _(XR_TYPE_PERFORMANCE_METRICS_STATE_META, 1000232001) \
     _(XR_TYPE_PERFORMANCE_METRICS_COUNTER_META, 1000232002) \
+    _(XR_TYPE_SYSTEM_FORCE_FEEDBACK_PROPERTIES_MNDX, 1000370002) \
+    _(XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX, 1000370003) \
+    _(XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATION_MNDX, 1000370004) \
     _(XR_STRUCTURE_TYPE_MAX_ENUM, 0x7FFFFFFF)
 
 #define XR_LIST_ENUM_XrFormFactor(_) \
@@ -746,6 +749,14 @@ XR_ENUM_STR(XrResult);
     _(XR_PERFORMANCE_METRICS_COUNTER_UNIT_BYTES_META, 3) \
     _(XR_PERFORMANCE_METRICS_COUNTER_UNIT_HERTZ_META, 4) \
     _(XR_PERFORMANCE_METRICS_COUNTER_UNIT_MAX_ENUM_META, 0x7FFFFFFF)
+
+#define XR_LIST_ENUM_XrForceFeedbackCurlLocationMNDX(_) \
+    _(XR_FORCE_FEEDBACK_CURL_LOCATION_THUMB, 0) \
+    _(XR_FORCE_FEEDBACK_CURL_LOCATION_INDEX_FINGER, 1) \
+    _(XR_FORCE_FEEDBACK_CURL_LOCATION_MIDDLE_FINGER, 2) \
+    _(XR_FORCE_FEEDBACK_CURL_LOCATION_RING_FINGER, 3) \
+    _(XR_FORCE_FEEDBACK_CURL_LOCATION_LITTLE_FINGER, 4) \
+    _(XR_FORCE_FEEDBACK_CURL_LOCATION_MAX_ENUM_MNDX, 0x7FFFFFFF)
 
 #define XR_LIST_BITS_XrInstanceCreateFlags(_)
 
@@ -2675,6 +2686,17 @@ XR_ENUM_STR(XrResult);
     _(uintValue) \
     _(floatValue) \
 
+#define XR_LIST_STRUCT_XrSystemForceFeedbackPropertiesMNDX(_) \
+    _(type) \
+    _(next) \
+    _(supportsForceFeedback) \
+
+#define XR_LIST_STRUCT_XrApplyForceFeedbackCurlLocationMNDX(_) \
+    _(type) \
+    _(next) \
+    _(location) \
+    _(value) \
+
 
 
 #define XR_LIST_STRUCTURE_TYPES_CORE(_) \
@@ -2876,6 +2898,8 @@ XR_ENUM_STR(XrResult);
     _(XrCompositionLayerSettingsFB, XR_TYPE_COMPOSITION_LAYER_SETTINGS_FB) \
     _(XrPerformanceMetricsStateMETA, XR_TYPE_PERFORMANCE_METRICS_STATE_META) \
     _(XrPerformanceMetricsCounterMETA, XR_TYPE_PERFORMANCE_METRICS_COUNTER_META) \
+    _(XrSystemForceFeedbackPropertiesMNDX, XR_TYPE_SYSTEM_FORCE_FEEDBACK_PROPERTIES_MNDX) \
+    _(XrApplyForceFeedbackCurlLocationMNDX, XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATION_MNDX) \
 
 
 
@@ -3138,6 +3162,7 @@ XR_ENUM_STR(XrResult);
     _(XR_META_vulkan_swapchain_create_info, 228) \
     _(XR_META_performance_metrics, 233) \
     _(XR_EXT_uuid, 300) \
+    _(XR_MNDX_force_feedback_curl, 371) \
 
 
 #endif

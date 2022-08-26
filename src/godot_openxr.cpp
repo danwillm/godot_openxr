@@ -9,6 +9,7 @@
 #include "gdclasses/OpenXRHand.h"
 #include "gdclasses/OpenXRPose.h"
 #include "gdclasses/OpenXRSkeleton.h"
+#include "gdclasses/OpenXRForceFeedback.h"
 
 void GDN_EXPORT godot_openxr_gdnative_init(godot_gdnative_init_options *o) {
 	godot::Godot::gdnative_init(o);
@@ -31,4 +32,5 @@ void GDN_EXPORT godot_openxr_nativescript_init(void *p_handle) {
 	godot::register_class<godot::OpenXRHand>();
 	godot::register_class<godot::OpenXRPose>();
 	godot::register_class<godot::OpenXRSkeleton>();
+	godot::register_class<godot::OpenXRForceFeedback>();
 }
