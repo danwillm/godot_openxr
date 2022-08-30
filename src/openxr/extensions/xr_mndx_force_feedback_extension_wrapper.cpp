@@ -12,6 +12,8 @@ XRMNDXForceFeedbackExtensionWrapper::XRMNDXForceFeedbackExtensionWrapper() {
 	request_extensions[XR_MNDX_FORCE_FEEDBACK_CURL_EXTENSION_NAME] = &force_feedback_ext;
 }
 
+XRMNDXForceFeedbackExtensionWrapper *XRMNDXForceFeedbackExtensionWrapper::singleton = nullptr;
+
 XRMNDXForceFeedbackExtensionWrapper *XRMNDXForceFeedbackExtensionWrapper::get_singleton() {
 	if (!singleton) {
 		singleton = new XRMNDXForceFeedbackExtensionWrapper();
@@ -60,6 +62,10 @@ bool XRMNDXForceFeedbackExtensionWrapper::initialise_force_feedback() {
 }
 
 void XRMNDXForceFeedbackExtensionWrapper::set_force_feedback(XrApplyForceFeedbackCurlLocationMNDX *locations, uint64_t location_count) {
+}
+
+void XRMNDXForceFeedbackExtensionWrapper::cleanup() {
+
 }
 
 PFN_xrApplyForceFeedbackCurlMNDX xrApplyForceFeedbackCurlMNDX_ptr = nullptr;
