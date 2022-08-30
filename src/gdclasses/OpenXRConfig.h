@@ -11,6 +11,7 @@
 #include "openxr/extensions/xr_fb_display_refresh_rate_extension_wrapper.h"
 #include "openxr/extensions/xr_fb_foveation_extension_wrapper.h"
 #include "openxr/extensions/xr_fb_passthrough_extension_wrapper.h"
+#include "openxr/extensions/xr_mndx_force_feedback_extension_wrapper.h"
 #include <Node.hpp>
 
 namespace godot {
@@ -25,6 +26,7 @@ private:
 	XRExtPerformanceSettingsExtensionWrapper *performance_settings_wrapper = nullptr;
 	XRFbPassthroughExtensionWrapper *passthrough_wrapper = nullptr;
 	XRExtHandTrackingExtensionWrapper *hand_tracking_wrapper = nullptr;
+	XRMNDXForceFeedbackExtensionWrapper *force_feedback_wrapper = nullptr;
 
 public:
 	// For Godot we can't have gaps in our enums so we define our own where needed.

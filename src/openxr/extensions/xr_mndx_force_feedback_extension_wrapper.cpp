@@ -59,6 +59,9 @@ bool XRMNDXForceFeedbackExtensionWrapper::initialise_force_feedback() {
 	return result == XR_SUCCESS;
 }
 
+void XRMNDXForceFeedbackExtensionWrapper::set_force_feedback(XrApplyForceFeedbackCurlLocationMNDX *locations, uint64_t location_count) {
+}
+
 PFN_xrApplyForceFeedbackCurlMNDX xrApplyForceFeedbackCurlMNDX_ptr = nullptr;
 
 XRAPI_ATTR XrResult XRAPI_CALL XRMNDXForceFeedbackExtensionWrapper::xrApplyForceFeedbackCurlMNDX(XrHandTrackerEXT handTracker, const XrApplyForceFeedbackCurlLocationMNDX *locations, uint64_t locationCount) {

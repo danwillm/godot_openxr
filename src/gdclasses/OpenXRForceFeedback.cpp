@@ -41,6 +41,4 @@ bool OpenXRForceFeedback::is_active() {
 
 void OpenXRForceFeedback::set_force_feedback() {
 	RETURN_IF_NULLPTR(force_feedback_wrapper);
-
-
 }

@@ -80,6 +80,7 @@ OpenXRConfig::OpenXRConfig() {
 	performance_settings_wrapper = XRExtPerformanceSettingsExtensionWrapper::get_singleton();
 	passthrough_wrapper = XRFbPassthroughExtensionWrapper::get_singleton();
 	hand_tracking_wrapper = XRExtHandTrackingExtensionWrapper::get_singleton();
+	force_feedback_wrapper = XRMNDXForceFeedbackExtensionWrapper::get_singleton();
 }
 
 OpenXRConfig::~OpenXRConfig() {
@@ -92,6 +93,7 @@ OpenXRConfig::~OpenXRConfig() {
 	performance_settings_wrapper = nullptr;
 	passthrough_wrapper = nullptr;
 	hand_tracking_wrapper = nullptr;
+	force_feedback_wrapper = nullptr;
 }
 
 void OpenXRConfig::_init() {

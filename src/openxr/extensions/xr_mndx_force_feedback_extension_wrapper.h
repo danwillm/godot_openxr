@@ -5,6 +5,8 @@
 #include "openxr/include/openxr_inc.h"
 #include "xr_extension_wrapper.h"
 
+#define MAX_FORCE_FEEDBACK_DEVICES 2
+
 class ForceFeedback {
 public:
 	bool is_initialised = false;
@@ -20,7 +22,7 @@ public:
 
 	void on_state_ready() override;
 
-	void on_process_openxr() override;
+	void set_force_feedback(XrApplyForceFeedbackCurlLocationMNDX* locations, uint64_t location_count);
 
 protected:
 	XRMNDXForceFeedbackExtensionWrapper();
@@ -41,6 +43,8 @@ private:
 	OpenXRApi *openxr_api = nullptr;
 
 	bool force_feedback_ext = false;
+
+	ForceFeedback force_feedback[MAX_FORCE_FEEDBACK_DEVICES];
 };
 
 #endif
