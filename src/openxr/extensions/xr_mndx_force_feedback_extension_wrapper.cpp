@@ -54,9 +54,7 @@ XRAPI_ATTR XrResult XRAPI_CALL XRMNDXForceFeedbackExtensionWrapper::xrApplyForce
 XrResult XRMNDXForceFeedbackExtensionWrapper::initialise_mndx_force_feedback_extension(XrInstance instance) {
 	XrResult result;
 
-	if(instance == nullptr) return XR_SUCCESS;
-
-	result = xrGetInstanceProcAddr(instance, "xrApplyForceFeedbackCurlMNDX", (PFN_xrVoidFunction *)&xrApplyForceFeedbackCurlMNDX);
+	result = xrGetInstanceProcAddr(instance, "xrApplyForceFeedbackCurlMNDX", (PFN_xrVoidFunction *)&xrApplyForceFeedbackCurlMNDX_ptr);
 	if (result != XR_SUCCESS) {
 		return result;
 	}
