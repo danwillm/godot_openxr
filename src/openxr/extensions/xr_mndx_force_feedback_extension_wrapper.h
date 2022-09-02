@@ -22,7 +22,7 @@ public:
 
 	void on_state_ready() override;
 
-	void set_force_feedback(XrApplyForceFeedbackCurlLocationMNDX* locations, uint64_t location_count);
+	void set_force_feedback(XrApplyForceFeedbackCurlLocationsMNDX* locations);
 
 protected:
 	XRMNDXForceFeedbackExtensionWrapper();
@@ -31,7 +31,7 @@ protected:
 private:
 	static XRAPI_ATTR XrResult XRAPI_CALL xrApplyForceFeedbackCurlMNDX(
 			XrHandTrackerEXT handTracker,
-			const XrApplyForceFeedbackCurlLocationMNDX *locations, uint64_t locationCount);
+			const XrApplyForceFeedbackCurlLocationsMNDX *locations);
 
 	static XrResult initialise_mndx_force_feedback_extension(XrInstance instance);
 

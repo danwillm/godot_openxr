@@ -451,7 +451,6 @@ typedef enum XrStructureType {
     XR_TYPE_PERFORMANCE_METRICS_COUNTER_META = 1000232002,
     XR_TYPE_SYSTEM_FORCE_FEEDBACK_PROPERTIES_MNDX = 1000370002,
     XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX = 1000370003,
-    XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATION_MNDX = 1000370004,
     XR_TYPE_GRAPHICS_BINDING_VULKAN2_KHR = XR_TYPE_GRAPHICS_BINDING_VULKAN_KHR,
     XR_TYPE_SWAPCHAIN_IMAGE_VULKAN2_KHR = XR_TYPE_SWAPCHAIN_IMAGE_VULKAN_KHR,
     XR_TYPE_GRAPHICS_REQUIREMENTS_VULKAN2_KHR = XR_TYPE_GRAPHICS_REQUIREMENTS_VULKAN_KHR,
@@ -4577,20 +4576,24 @@ typedef struct XrSystemForceFeedbackPropertiesMNDX {
 } XrSystemForceFeedbackPropertiesMNDX;
 
 typedef struct XrApplyForceFeedbackCurlLocationMNDX {
-    XrStructureType                    type;
-    const void* XR_MAY_ALIAS           next;
     XrForceFeedbackCurlLocationMNDX    location;
     float                              value;
 } XrApplyForceFeedbackCurlLocationMNDX;
 
-typedef XrResult (XRAPI_PTR *PFN_xrApplyForceFeedbackCurlMNDX)(XrHandTrackerEXT handTracker, const XrApplyForceFeedbackCurlLocationMNDX* locations, uint64_t locationCount);
+typedef struct XrApplyForceFeedbackCurlLocationsMNDX {
+    XrStructureType                          type;
+    const void* XR_MAY_ALIAS                 next;
+    XrApplyForceFeedbackCurlLocationMNDX*    locations;
+    uint32_t                                 locationCount;
+} XrApplyForceFeedbackCurlLocationsMNDX;
+
+typedef XrResult (XRAPI_PTR *PFN_xrApplyForceFeedbackCurlMNDX)(XrHandTrackerEXT handTracker, const XrApplyForceFeedbackCurlLocationsMNDX* locations);
 
 #ifndef XR_NO_PROTOTYPES
 #ifdef XR_EXTENSION_PROTOTYPES
 XRAPI_ATTR XrResult XRAPI_CALL xrApplyForceFeedbackCurlMNDX(
     XrHandTrackerEXT                            handTracker,
-    const XrApplyForceFeedbackCurlLocationMNDX* locations,
-    uint64_t                                    locationCount);
+    const XrApplyForceFeedbackCurlLocationsMNDX* locations);
 #endif /* XR_EXTENSION_PROTOTYPES */
 #endif /* !XR_NO_PROTOTYPES */
 

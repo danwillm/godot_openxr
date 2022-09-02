@@ -20,7 +20,8 @@ OpenXRForceFeedback::~OpenXRForceFeedback() {
 void OpenXRForceFeedback::_register_methods() {
 	register_method("_ready", &OpenXRForceFeedback::_ready);
 	register_method("_init", &OpenXRForceFeedback::_init);
-	register_method("set_force_feedback", &OpenXRForceFeedback::set_force_feedback);
+	register_method("set", &OpenXRForceFeedback::set);
+	register_method("relax", &OpenXRForceFeedback::relax);
 
 	register_method("is_active", &OpenXRForceFeedback::is_active);
 }
@@ -39,6 +40,10 @@ bool OpenXRForceFeedback::is_active() {
 	return true;
 }
 
-void OpenXRForceFeedback::set_force_feedback() {
-	RETURN_IF_NULLPTR(force_feedback_wrapper);
+void OpenXRForceFeedback::set(float thumb, float index, float middle, float ring, float pinky) {
+
+}
+
+void OpenXRForceFeedback::relax() {
+	set(0.0f,0.0f,0.0f,0.0f,0.0f);
 }

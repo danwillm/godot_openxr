@@ -20,7 +20,8 @@ public:
 
 	bool is_active();
 
-	void set_force_feedback();
+	void set(float thumb, float index, float middle, float ring, float pinky);
+	void relax();
 
 private:
 	OpenXRApi* openxr_api;

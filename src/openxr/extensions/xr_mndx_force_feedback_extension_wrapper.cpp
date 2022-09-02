@@ -40,8 +40,26 @@ void XRMNDXForceFeedbackExtensionWrapper::on_state_ready() {
 	initialise_force_feedback();
 }
 
+PFN_xrApplyForceFeedbackCurlMNDX xrApplyForceFeedbackCurlMNDX_ptr = nullptr;
+
+XRAPI_ATTR XrResult XRAPI_CALL XRMNDXForceFeedbackExtensionWrapper::xrApplyForceFeedbackCurlMNDX(XrHandTrackerEXT handTracker, const XrApplyForceFeedbackCurlLocationsMNDX *locations) {
+	if (xrApplyForceFeedbackCurlMNDX_ptr == nullptr) {
+		return XR_ERROR_HANDLE_INVALID;
+	}
+
+	return (*xrApplyForceFeedbackCurlMNDX_ptr)(handTracker, locations);
+}
+
+
 XrResult XRMNDXForceFeedbackExtensionWrapper::initialise_mndx_force_feedback_extension(XrInstance instance) {
-	XR_SUCCESS_OR_RETURN(xrGetInstanceProcAddr(instance, "xrApplyForceFeedbackCurlMNDX", (PFN_xrVoidFunction *)&xrApplyForceFeedbackCurlMNDX));
+	XrResult result;
+
+	if(instance == nullptr) return XR_SUCCESS;
+
+	result = xrGetInstanceProcAddr(instance, "xrApplyForceFeedbackCurlMNDX", (PFN_xrVoidFunction *)&xrApplyForceFeedbackCurlMNDX);
+	if (result != XR_SUCCESS) {
+		return result;
+	}
 
 	return XR_SUCCESS;
 }
@@ -61,19 +79,9 @@ bool XRMNDXForceFeedbackExtensionWrapper::initialise_force_feedback() {
 	return result == XR_SUCCESS;
 }
 
-void XRMNDXForceFeedbackExtensionWrapper::set_force_feedback(XrApplyForceFeedbackCurlLocationMNDX *locations, uint64_t location_count) {
+void XRMNDXForceFeedbackExtensionWrapper::set_force_feedback(XrApplyForceFeedbackCurlLocationsMNDX *locations) {
 }
 
 void XRMNDXForceFeedbackExtensionWrapper::cleanup() {
 
-}
-
-PFN_xrApplyForceFeedbackCurlMNDX xrApplyForceFeedbackCurlMNDX_ptr = nullptr;
-
-XRAPI_ATTR XrResult XRAPI_CALL XRMNDXForceFeedbackExtensionWrapper::xrApplyForceFeedbackCurlMNDX(XrHandTrackerEXT handTracker, const XrApplyForceFeedbackCurlLocationMNDX *locations, uint64_t locationCount) {
-	if (xrApplyForceFeedbackCurlMNDX_ptr == nullptr) {
-		return XR_ERROR_HANDLE_INVALID;
-	}
-
-	return (*xrApplyForceFeedbackCurlMNDX_ptr)(handTracker, locations, locationCount);
 }

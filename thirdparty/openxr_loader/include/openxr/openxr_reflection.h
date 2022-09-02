@@ -352,7 +352,6 @@ XR_ENUM_STR(XrResult);
     _(XR_TYPE_PERFORMANCE_METRICS_COUNTER_META, 1000232002) \
     _(XR_TYPE_SYSTEM_FORCE_FEEDBACK_PROPERTIES_MNDX, 1000370002) \
     _(XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX, 1000370003) \
-    _(XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATION_MNDX, 1000370004) \
     _(XR_STRUCTURE_TYPE_MAX_ENUM, 0x7FFFFFFF)
 
 #define XR_LIST_ENUM_XrFormFactor(_) \
@@ -2692,10 +2691,14 @@ XR_ENUM_STR(XrResult);
     _(supportsForceFeedback) \
 
 #define XR_LIST_STRUCT_XrApplyForceFeedbackCurlLocationMNDX(_) \
-    _(type) \
-    _(next) \
     _(location) \
     _(value) \
+
+#define XR_LIST_STRUCT_XrApplyForceFeedbackCurlLocationsMNDX(_) \
+    _(type) \
+    _(next) \
+    _(locations) \
+    _(locationCount) \
 
 
 
@@ -2899,7 +2902,7 @@ XR_ENUM_STR(XrResult);
     _(XrPerformanceMetricsStateMETA, XR_TYPE_PERFORMANCE_METRICS_STATE_META) \
     _(XrPerformanceMetricsCounterMETA, XR_TYPE_PERFORMANCE_METRICS_COUNTER_META) \
     _(XrSystemForceFeedbackPropertiesMNDX, XR_TYPE_SYSTEM_FORCE_FEEDBACK_PROPERTIES_MNDX) \
-    _(XrApplyForceFeedbackCurlLocationMNDX, XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATION_MNDX) \
+    _(XrApplyForceFeedbackCurlLocationsMNDX, XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX) \
 
 
 

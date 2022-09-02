@@ -115,6 +115,8 @@ func _on_button_release(p_button):
 			drop_object()
 
 func _ready():
+	if $ForceFeedback:
+		print("hello")
 	get_parent().connect("button_pressed", self, "_on_button_pressed")
 	get_parent().connect("button_release", self, "_on_button_release")
 
