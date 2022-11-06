@@ -44,12 +44,18 @@ func _on_Function_Pickup_entered(object):
 	# add our object to our array if required
 	if object.has_method('pick_up') and object_in_area.find(object) == -1:
 		object_in_area.push_back(object)
+		
+		$ForceFeedback.set_force_feedback()
+		
 		_update_closest_object()
 
 func _on_Function_Pickup_exited(object):
 	# remove our object from our array
 	if object_in_area.find(object) != -1:
 		object_in_area.erase(object)
+		
+		$ForceFeedback.relax_force_feedback()
+		
 		_update_closest_object()
 
 func _update_closest_object():

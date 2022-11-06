@@ -5,6 +5,8 @@
 #include "openxr/extensions/xr_mndx_force_feedback_extension_wrapper.h"
 #include <Node.hpp>
 
+#include <array>
+
 namespace godot {
 class OpenXRForceFeedback : public Node {
 	GODOT_CLASS(OpenXRForceFeedback, Node)
@@ -20,14 +22,18 @@ public:
 
 	bool is_active();
 
-	void set_force_feedback(float thumb, float index, float middle, float ring, float pinky);
-	void relax_force_feedback();
+	void set_force_feedback(uint32_t hand);
+	void relax_force_feedback(uint32_t hand);
 
 private:
 	OpenXRApi* openxr_api;
 	XRMNDXForceFeedbackExtensionWrapper *force_feedback_wrapper = nullptr;
 
-	int hand;
+	float thumb_value;
+	float index_value;
+	float middle_value;
+	float ring_value;
+	float pinky_value;
 };
 } // namespace godot
 

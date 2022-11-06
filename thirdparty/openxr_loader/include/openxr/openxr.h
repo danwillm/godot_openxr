@@ -2,7 +2,7 @@
 #define OPENXR_H_ 1
 
 /*
-** Copyright (c) 2017-2022, The Khronos Group Inc.
+** Copyright 2017-2022 The Khronos Group Inc.
 **
 ** SPDX-License-Identifier: Apache-2.0 OR MIT
 */
@@ -25,7 +25,7 @@ extern "C" {
     ((((major) & 0xffffULL) << 48) | (((minor) & 0xffffULL) << 32) | ((patch) & 0xffffffffULL))
 
 // OpenXR current version number.
-#define XR_CURRENT_API_VERSION XR_MAKE_VERSION(1, 0, 24)
+#define XR_CURRENT_API_VERSION XR_MAKE_VERSION(1, 0, 25)
 
 #define XR_VERSION_MAJOR(version) (uint16_t)(((uint64_t)(version) >> 48)& 0xffffULL)
 #define XR_VERSION_MINOR(version) (uint16_t)(((uint64_t)(version) >> 32) & 0xffffULL)
@@ -401,6 +401,7 @@ typedef enum XrStructureType {
     XR_TYPE_COMPOSITION_LAYER_PASSTHROUGH_FB = 1000118003,
     XR_TYPE_GEOMETRY_INSTANCE_CREATE_INFO_FB = 1000118004,
     XR_TYPE_GEOMETRY_INSTANCE_TRANSFORM_FB = 1000118005,
+    XR_TYPE_SYSTEM_PASSTHROUGH_PROPERTIES2_FB = 1000118006,
     XR_TYPE_PASSTHROUGH_STYLE_FB = 1000118020,
     XR_TYPE_PASSTHROUGH_COLOR_MAP_MONO_TO_RGBA_FB = 1000118021,
     XR_TYPE_PASSTHROUGH_COLOR_MAP_MONO_TO_MONO_FB = 1000118022,
@@ -449,8 +450,8 @@ typedef enum XrStructureType {
     XR_TYPE_VULKAN_SWAPCHAIN_CREATE_INFO_META = 1000227000,
     XR_TYPE_PERFORMANCE_METRICS_STATE_META = 1000232001,
     XR_TYPE_PERFORMANCE_METRICS_COUNTER_META = 1000232002,
-    XR_TYPE_SYSTEM_FORCE_FEEDBACK_PROPERTIES_MNDX = 1000370002,
-    XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX = 1000370003,
+    XR_TYPE_SYSTEM_FORCE_FEEDBACK_CURL_PROPERTIES_MNDX = 1000375002,
+    XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX = 1000375003,
     XR_TYPE_GRAPHICS_BINDING_VULKAN2_KHR = XR_TYPE_GRAPHICS_BINDING_VULKAN_KHR,
     XR_TYPE_SWAPCHAIN_IMAGE_VULKAN2_KHR = XR_TYPE_SWAPCHAIN_IMAGE_VULKAN_KHR,
     XR_TYPE_GRAPHICS_REQUIREMENTS_VULKAN2_KHR = XR_TYPE_GRAPHICS_REQUIREMENTS_VULKAN_KHR,
@@ -2608,7 +2609,7 @@ typedef struct XrHandJointsMotionRangeInfoEXT {
 
             XR_DEFINE_HANDLE(XrSceneMSFT)
 
-#define XR_MSFT_scene_understanding_SPEC_VERSION 1
+#define XR_MSFT_scene_understanding_SPEC_VERSION 2
 #define XR_MSFT_SCENE_UNDERSTANDING_EXTENSION_NAME "XR_MSFT_scene_understanding"
 
 typedef enum XrSceneComputeFeatureMSFT {
@@ -2930,7 +2931,7 @@ XRAPI_ATTR XrResult XRAPI_CALL xrGetSceneMeshBuffersMSFT(
 
 
 #define XR_MSFT_scene_understanding_serialization 1
-#define XR_MSFT_scene_understanding_serialization_SPEC_VERSION 1
+#define XR_MSFT_scene_understanding_serialization_SPEC_VERSION 2
 #define XR_MSFT_SCENE_UNDERSTANDING_SERIALIZATION_EXTENSION_NAME "XR_MSFT_scene_understanding_serialization"
 typedef struct XrSerializedSceneFragmentDataGetInfoMSFT {
     XrStructureType             type;
@@ -3171,7 +3172,7 @@ XRAPI_ATTR XrResult XRAPI_CALL xrGetFacialExpressionsHTC(
 
 
 #define XR_FB_color_space 1
-#define XR_FB_color_space_SPEC_VERSION    2
+#define XR_FB_color_space_SPEC_VERSION    3
 #define XR_FB_COLOR_SPACE_EXTENSION_NAME  "XR_FB_color_space"
 
 typedef enum XrColorSpaceFB {
@@ -3211,7 +3212,7 @@ XRAPI_ATTR XrResult XRAPI_CALL xrSetColorSpaceFB(
 
 
 #define XR_FB_hand_tracking_mesh 1
-#define XR_FB_hand_tracking_mesh_SPEC_VERSION 2
+#define XR_FB_hand_tracking_mesh_SPEC_VERSION 3
 #define XR_FB_HAND_TRACKING_MESH_EXTENSION_NAME "XR_FB_hand_tracking_mesh"
 typedef struct XrVector4sFB {
     int16_t    x;
@@ -3634,7 +3635,7 @@ XRAPI_ATTR XrResult XRAPI_CALL xrTriangleMeshEndVertexBufferUpdateFB(
 XR_DEFINE_HANDLE(XrPassthroughFB)
 XR_DEFINE_HANDLE(XrPassthroughLayerFB)
 XR_DEFINE_HANDLE(XrGeometryInstanceFB)
-#define XR_FB_passthrough_SPEC_VERSION    2
+#define XR_FB_passthrough_SPEC_VERSION    3
 #define XR_FB_PASSTHROUGH_EXTENSION_NAME  "XR_FB_passthrough"
 #define XR_PASSTHROUGH_COLOR_MAP_MONO_SIZE_FB 256
 
@@ -3645,10 +3646,18 @@ typedef enum XrPassthroughLayerPurposeFB {
     XR_PASSTHROUGH_LAYER_PURPOSE_TRACKED_KEYBOARD_MASKED_HANDS_FB = 1000203002,
     XR_PASSTHROUGH_LAYER_PURPOSE_MAX_ENUM_FB = 0x7FFFFFFF
 } XrPassthroughLayerPurposeFB;
+typedef XrFlags64 XrPassthroughCapabilityFlagsFB;
+
+// Flag bits for XrPassthroughCapabilityFlagsFB
+static const XrPassthroughCapabilityFlagsFB XR_PASSTHROUGH_CAPABILITY_BIT_FB = 0x00000001;
+static const XrPassthroughCapabilityFlagsFB XR_PASSTHROUGH_CAPABILITY_COLOR_BIT_FB = 0x00000002;
+static const XrPassthroughCapabilityFlagsFB XR_PASSTHROUGH_CAPABILITY_LAYER_DEPTH_BIT_FB = 0x00000004;
+
 typedef XrFlags64 XrPassthroughFlagsFB;
 
 // Flag bits for XrPassthroughFlagsFB
 static const XrPassthroughFlagsFB XR_PASSTHROUGH_IS_RUNNING_AT_CREATION_BIT_FB = 0x00000001;
+static const XrPassthroughFlagsFB XR_PASSTHROUGH_LAYER_DEPTH_BIT_FB = 0x00000002;
 
 typedef XrFlags64 XrPassthroughStateChangedFlagsFB;
 
@@ -3664,6 +3673,13 @@ typedef struct XrSystemPassthroughPropertiesFB {
     const void* XR_MAY_ALIAS    next;
     XrBool32                    supportsPassthrough;
 } XrSystemPassthroughPropertiesFB;
+
+// XrSystemPassthroughProperties2FB extends XrSystemProperties
+typedef struct XrSystemPassthroughProperties2FB {
+    XrStructureType                   type;
+    const void* XR_MAY_ALIAS          next;
+    XrPassthroughCapabilityFlagsFB    capabilities;
+} XrSystemPassthroughProperties2FB;
 
 typedef struct XrPassthroughCreateInfoFB {
     XrStructureType             type;
@@ -3810,7 +3826,7 @@ XRAPI_ATTR XrResult XRAPI_CALL xrGeometryInstanceSetTransformFB(
 #define XR_NULL_RENDER_MODEL_KEY_FB 0
 
 XR_DEFINE_ATOM(XrRenderModelKeyFB)
-#define XR_FB_render_model_SPEC_VERSION   2
+#define XR_FB_render_model_SPEC_VERSION   3
 #define XR_FB_RENDER_MODEL_EXTENSION_NAME "XR_FB_render_model"
 #define XR_MAX_RENDER_MODEL_NAME_SIZE_FB  64
 typedef XrFlags64 XrRenderModelFlagsFB;
@@ -4014,6 +4030,11 @@ XRAPI_ATTR XrResult  XRAPI_CALL xrSetViewOffsetVARJO(
     float                                       offset);
 #endif /* XR_EXTENSION_PROTOTYPES */
 #endif /* !XR_NO_PROTOTYPES */
+
+
+#define XR_ML_ml2_controller_interaction 1
+#define XR_ML_ml2_controller_interaction_SPEC_VERSION 1
+#define XR_ML_ML2_CONTROLLER_INTERACTION_EXTENSION_NAME "XR_ML_ml2_controller_interaction"
 
 
 #define XR_MSFT_spatial_anchor_persistence 1
@@ -4561,19 +4582,19 @@ XRAPI_ATTR XrResult XRAPI_CALL xrQueryPerformanceMetricsCounterMETA(
 #define XR_MNDX_FORCE_FEEDBACK_CURL_EXTENSION_NAME "XR_MNDX_force_feedback_curl"
 
 typedef enum XrForceFeedbackCurlLocationMNDX {
-    XR_FORCE_FEEDBACK_CURL_LOCATION_THUMB = 0,
-    XR_FORCE_FEEDBACK_CURL_LOCATION_INDEX_FINGER = 1,
-    XR_FORCE_FEEDBACK_CURL_LOCATION_MIDDLE_FINGER = 2,
-    XR_FORCE_FEEDBACK_CURL_LOCATION_RING_FINGER = 3,
-    XR_FORCE_FEEDBACK_CURL_LOCATION_LITTLE_FINGER = 4,
+    XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_THUMB_CURL_MNDX = 0,
+    XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_INDEX_CURL_MNDX = 1,
+    XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_MIDDLE_CURL_MNDX = 2,
+    XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_RING_CURL_MNDX = 3,
+    XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_LITTLE_CURL_MNDX = 4,
     XR_FORCE_FEEDBACK_CURL_LOCATION_MAX_ENUM_MNDX = 0x7FFFFFFF
 } XrForceFeedbackCurlLocationMNDX;
-// XrSystemForceFeedbackPropertiesMNDX extends XrSystemProperties
-typedef struct XrSystemForceFeedbackPropertiesMNDX {
+// XrSystemForceFeedbackCurlPropertiesMNDX extends XrSystemProperties
+typedef struct XrSystemForceFeedbackCurlPropertiesMNDX {
     XrStructureType       type;
     void* XR_MAY_ALIAS    next;
-    XrBool32              supportsForceFeedback;
-} XrSystemForceFeedbackPropertiesMNDX;
+    XrBool32              supportsForceFeedbackCurl;
+} XrSystemForceFeedbackCurlPropertiesMNDX;
 
 typedef struct XrApplyForceFeedbackCurlLocationMNDX {
     XrForceFeedbackCurlLocationMNDX    location;

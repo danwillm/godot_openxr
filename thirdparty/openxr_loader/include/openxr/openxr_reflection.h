@@ -302,6 +302,7 @@ XR_ENUM_STR(XrResult);
     _(XR_TYPE_COMPOSITION_LAYER_PASSTHROUGH_FB, 1000118003) \
     _(XR_TYPE_GEOMETRY_INSTANCE_CREATE_INFO_FB, 1000118004) \
     _(XR_TYPE_GEOMETRY_INSTANCE_TRANSFORM_FB, 1000118005) \
+    _(XR_TYPE_SYSTEM_PASSTHROUGH_PROPERTIES2_FB, 1000118006) \
     _(XR_TYPE_PASSTHROUGH_STYLE_FB, 1000118020) \
     _(XR_TYPE_PASSTHROUGH_COLOR_MAP_MONO_TO_RGBA_FB, 1000118021) \
     _(XR_TYPE_PASSTHROUGH_COLOR_MAP_MONO_TO_MONO_FB, 1000118022) \
@@ -350,8 +351,8 @@ XR_ENUM_STR(XrResult);
     _(XR_TYPE_VULKAN_SWAPCHAIN_CREATE_INFO_META, 1000227000) \
     _(XR_TYPE_PERFORMANCE_METRICS_STATE_META, 1000232001) \
     _(XR_TYPE_PERFORMANCE_METRICS_COUNTER_META, 1000232002) \
-    _(XR_TYPE_SYSTEM_FORCE_FEEDBACK_PROPERTIES_MNDX, 1000370002) \
-    _(XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX, 1000370003) \
+    _(XR_TYPE_SYSTEM_FORCE_FEEDBACK_CURL_PROPERTIES_MNDX, 1000375002) \
+    _(XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX, 1000375003) \
     _(XR_STRUCTURE_TYPE_MAX_ENUM, 0x7FFFFFFF)
 
 #define XR_LIST_ENUM_XrFormFactor(_) \
@@ -750,11 +751,11 @@ XR_ENUM_STR(XrResult);
     _(XR_PERFORMANCE_METRICS_COUNTER_UNIT_MAX_ENUM_META, 0x7FFFFFFF)
 
 #define XR_LIST_ENUM_XrForceFeedbackCurlLocationMNDX(_) \
-    _(XR_FORCE_FEEDBACK_CURL_LOCATION_THUMB, 0) \
-    _(XR_FORCE_FEEDBACK_CURL_LOCATION_INDEX_FINGER, 1) \
-    _(XR_FORCE_FEEDBACK_CURL_LOCATION_MIDDLE_FINGER, 2) \
-    _(XR_FORCE_FEEDBACK_CURL_LOCATION_RING_FINGER, 3) \
-    _(XR_FORCE_FEEDBACK_CURL_LOCATION_LITTLE_FINGER, 4) \
+    _(XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_THUMB_CURL_MNDX, 0) \
+    _(XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_INDEX_CURL_MNDX, 1) \
+    _(XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_MIDDLE_CURL_MNDX, 2) \
+    _(XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_RING_CURL_MNDX, 3) \
+    _(XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_LITTLE_CURL_MNDX, 4) \
     _(XR_FORCE_FEEDBACK_CURL_LOCATION_MAX_ENUM_MNDX, 0x7FFFFFFF)
 
 #define XR_LIST_BITS_XrInstanceCreateFlags(_)
@@ -864,8 +865,14 @@ XR_ENUM_STR(XrResult);
 #define XR_LIST_BITS_XrTriangleMeshFlagsFB(_) \
     _(XR_TRIANGLE_MESH_MUTABLE_BIT_FB, 0x00000001) \
 
+#define XR_LIST_BITS_XrPassthroughCapabilityFlagsFB(_) \
+    _(XR_PASSTHROUGH_CAPABILITY_BIT_FB, 0x00000001) \
+    _(XR_PASSTHROUGH_CAPABILITY_COLOR_BIT_FB, 0x00000002) \
+    _(XR_PASSTHROUGH_CAPABILITY_LAYER_DEPTH_BIT_FB, 0x00000004) \
+
 #define XR_LIST_BITS_XrPassthroughFlagsFB(_) \
     _(XR_PASSTHROUGH_IS_RUNNING_AT_CREATION_BIT_FB, 0x00000001) \
+    _(XR_PASSTHROUGH_LAYER_DEPTH_BIT_FB, 0x00000002) \
 
 #define XR_LIST_BITS_XrPassthroughStateChangedFlagsFB(_) \
     _(XR_PASSTHROUGH_STATE_CHANGED_REINIT_REQUIRED_BIT_FB, 0x00000001) \
@@ -2305,6 +2312,11 @@ XR_ENUM_STR(XrResult);
     _(next) \
     _(supportsPassthrough) \
 
+#define XR_LIST_STRUCT_XrSystemPassthroughProperties2FB(_) \
+    _(type) \
+    _(next) \
+    _(capabilities) \
+
 #define XR_LIST_STRUCT_XrPassthroughCreateInfoFB(_) \
     _(type) \
     _(next) \
@@ -2685,10 +2697,10 @@ XR_ENUM_STR(XrResult);
     _(uintValue) \
     _(floatValue) \
 
-#define XR_LIST_STRUCT_XrSystemForceFeedbackPropertiesMNDX(_) \
+#define XR_LIST_STRUCT_XrSystemForceFeedbackCurlPropertiesMNDX(_) \
     _(type) \
     _(next) \
-    _(supportsForceFeedback) \
+    _(supportsForceFeedbackCurl) \
 
 #define XR_LIST_STRUCT_XrApplyForceFeedbackCurlLocationMNDX(_) \
     _(location) \
@@ -2854,6 +2866,7 @@ XR_ENUM_STR(XrResult);
     _(XrKeyboardTrackingQueryFB, XR_TYPE_KEYBOARD_TRACKING_QUERY_FB) \
     _(XrTriangleMeshCreateInfoFB, XR_TYPE_TRIANGLE_MESH_CREATE_INFO_FB) \
     _(XrSystemPassthroughPropertiesFB, XR_TYPE_SYSTEM_PASSTHROUGH_PROPERTIES_FB) \
+    _(XrSystemPassthroughProperties2FB, XR_TYPE_SYSTEM_PASSTHROUGH_PROPERTIES2_FB) \
     _(XrPassthroughCreateInfoFB, XR_TYPE_PASSTHROUGH_CREATE_INFO_FB) \
     _(XrPassthroughLayerCreateInfoFB, XR_TYPE_PASSTHROUGH_LAYER_CREATE_INFO_FB) \
     _(XrCompositionLayerPassthroughFB, XR_TYPE_COMPOSITION_LAYER_PASSTHROUGH_FB) \
@@ -2901,7 +2914,7 @@ XR_ENUM_STR(XrResult);
     _(XrCompositionLayerSettingsFB, XR_TYPE_COMPOSITION_LAYER_SETTINGS_FB) \
     _(XrPerformanceMetricsStateMETA, XR_TYPE_PERFORMANCE_METRICS_STATE_META) \
     _(XrPerformanceMetricsCounterMETA, XR_TYPE_PERFORMANCE_METRICS_COUNTER_META) \
-    _(XrSystemForceFeedbackPropertiesMNDX, XR_TYPE_SYSTEM_FORCE_FEEDBACK_PROPERTIES_MNDX) \
+    _(XrSystemForceFeedbackCurlPropertiesMNDX, XR_TYPE_SYSTEM_FORCE_FEEDBACK_CURL_PROPERTIES_MNDX) \
     _(XrApplyForceFeedbackCurlLocationsMNDX, XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX) \
 
 
@@ -3145,6 +3158,7 @@ XR_ENUM_STR(XrResult);
     _(XR_VARJO_environment_depth_estimation, 124) \
     _(XR_VARJO_marker_tracking, 125) \
     _(XR_VARJO_view_offset, 126) \
+    _(XR_ML_ml2_controller_interaction, 135) \
     _(XR_MSFT_spatial_anchor_persistence, 143) \
     _(XR_ULTRALEAP_hand_tracking_forearm, 150) \
     _(XR_FB_spatial_entity_query, 157) \
@@ -3165,7 +3179,7 @@ XR_ENUM_STR(XrResult);
     _(XR_META_vulkan_swapchain_create_info, 228) \
     _(XR_META_performance_metrics, 233) \
     _(XR_EXT_uuid, 300) \
-    _(XR_MNDX_force_feedback_curl, 371) \
+    _(XR_MNDX_force_feedback_curl, 376) \
 
 
 #endif

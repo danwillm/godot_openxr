@@ -7,11 +7,19 @@
 
 #define MAX_FORCE_FEEDBACK_DEVICES 2
 
+struct ForceFeedbackData {
+	float thumb;
+	float index;
+	float middle;
+	float ring;
+	float pinky;
+};
+
 class ForceFeedback {
 public:
 	bool is_initialised = false;
 
-	XrHandTrackerEXT handTracker = XR_NULL_HANDLE;
+	XrHandTrackerEXT hand_tracker = XR_NULL_HANDLE;
 };
 
 class XRMNDXForceFeedbackExtensionWrapper : public XRExtensionWrapper {
@@ -22,7 +30,7 @@ public:
 
 	void on_state_ready() override;
 
-	void set_force_feedback(XrApplyForceFeedbackCurlLocationsMNDX* locations);
+	void set_force_feedback(uint32_t hand, const ForceFeedbackData &data);
 
 protected:
 	XRMNDXForceFeedbackExtensionWrapper();

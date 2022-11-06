@@ -1,4 +1,5 @@
 #include "xr_mndx_force_feedback_extension_wrapper.h"
+#include "xr_ext_hand_tracking_extension_wrapper.h"
 
 #define XR_SUCCESS_OR_RETURN(func) \
 	XrResult result = func;        \
@@ -50,7 +51,6 @@ XRAPI_ATTR XrResult XRAPI_CALL XRMNDXForceFeedbackExtensionWrapper::xrApplyForce
 	return (*xrApplyForceFeedbackCurlMNDX_ptr)(handTracker, locations);
 }
 
-
 XrResult XRMNDXForceFeedbackExtensionWrapper::initialise_mndx_force_feedback_extension(XrInstance instance) {
 	XrResult result;
 
@@ -63,8 +63,8 @@ XrResult XRMNDXForceFeedbackExtensionWrapper::initialise_mndx_force_feedback_ext
 }
 
 bool XRMNDXForceFeedbackExtensionWrapper::initialise_force_feedback() {
-	XrSystemForceFeedbackPropertiesMNDX forceFeedbackSystemProperties = {
-		.type = XR_TYPE_SYSTEM_FORCE_FEEDBACK_PROPERTIES_MNDX
+	XrSystemForceFeedbackCurlPropertiesMNDX forceFeedbackSystemProperties = {
+		.type = XR_TYPE_SYSTEM_FORCE_FEEDBACK_CURL_PROPERTIES_MNDX
 	};
 
 	XrSystemProperties systemProperties = {
@@ -73,13 +73,48 @@ bool XRMNDXForceFeedbackExtensionWrapper::initialise_force_feedback() {
 	};
 
 	XrResult result = xrGetSystemProperties(openxr_api->get_instance(), openxr_api->get_system_id(), &systemProperties);
+	if (!forceFeedbackSystemProperties.supportsForceFeedbackCurl) {
+		Godot::print("Force feedback is not supported\n");
+		return false;
+	}
+
+	XRExtHandTrackingExtensionWrapper *handTrackingWrapper = XRExtHandTrackingExtensionWrapper::get_singleton();
+
+	for (int i = 0; i < 2; i++) {
+		force_feedback[i].is_initialised = true;
+		force_feedback[i].hand_tracker = handTrackingWrapper->get_hand_tracker(i)->hand_tracker;
+	}
 
 	return result == XR_SUCCESS;
 }
 
-void XRMNDXForceFeedbackExtensionWrapper::set_force_feedback(XrApplyForceFeedbackCurlLocationsMNDX *locations) {
+void XRMNDXForceFeedbackExtensionWrapper::set_force_feedback(uint32_t hand, const ForceFeedbackData &data) {
+	XrApplyForceFeedbackCurlLocationsMNDX result;
+
+	const uint32_t locationCount = 5;
+	result.locationCount = locationCount;
+
+	XrApplyForceFeedbackCurlLocationMNDX locations[locationCount];
+
+	locations[0].value = data.thumb;
+	locations[0].location = XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_THUMB_CURL_MNDX;
+
+	locations[1].value = data.index;
+	locations[1].location = XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_INDEX_CURL_MNDX;
+
+	locations[2].value = data.middle;
+	locations[2].location = XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_MIDDLE_CURL_MNDX;
+
+	locations[3].value = data.ring;
+	locations[3].location = XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_RING_CURL_MNDX;
+
+	locations[4].value = data.pinky;
+	locations[4].location = XR_FORCE_FEEDBACK_CURL_LOCATION_FINGER_LITTLE_CURL_MNDX;
+
+	result.locations = locations;
+
+	xrApplyForceFeedbackCurlMNDX(force_feedback[hand].hand_tracker, &result);
 }
 
 void XRMNDXForceFeedbackExtensionWrapper::cleanup() {
-
 }
